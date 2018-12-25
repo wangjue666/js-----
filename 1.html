@@ -1,0 +1,68 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            text-align:center;
+            background:black;
+        }
+        #c1{background:url("img/game_bg_2_hd.jpg");}
+    </style>
+    <script src="jquery.js"></script>
+    <script src="js/resource.js"></script>
+    <script src="js/spirit.js"></script>
+    <script src="js/fish.js"></script>
+    <script src="js/Cannon.js"></script>
+    <script>
+        window.onload=async function(){
+            let oC=$('#c1')[0];
+            let gd=oC.getContext('2d');
+            
+            try{
+                await loadResources();    
+            }catch(e){
+                console.log(e);
+                alert('错了')
+            }
+
+            //底座
+            let data_bar=__g_resouce['bottom'].bottom_bar;
+            let bottom_bar=new Spirit({
+                img:    data_bar.img,
+                w:      data_bar.frame.w,
+                h:      data_bar.frame.h,
+                sx:     data_bar.frame.x,
+                sy:     data_bar.frame.y,
+                x:      400,
+                y:      566     
+            })
+            //炮
+            let cannon=new Cannon(1);
+            cannon.x=442;
+            cannon.y=577;
+          
+            requestAnimationFrame(next);
+            function next(){
+                //1清除
+                gd.clearRect(0,0,oC.width,oC.height);
+
+                //2移动
+               
+                //3绘制
+                bottom_bar.draw(gd);
+                cannon.draw(gd);
+                requestAnimationFrame(next);
+            }
+
+            //fish.draw(gd);
+            
+        }
+    </script>
+</head>
+<body>
+    <canvas width="800" height="600" id="c1"></canvas>
+</body>
+</html>
